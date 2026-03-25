@@ -1,0 +1,5 @@
+{
+  "name": "noesis-epub-tools",
+  "description": "A unified suite of ePub tools for image compression (single and batch) and chapter splitting.",
+  "requestFramePermissions": []
+}
