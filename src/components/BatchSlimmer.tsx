@@ -35,7 +35,7 @@ const BatchSlimmer = () => {
     const selectedFiles = (Array.from(files) as File[]).filter(f => f.name.toLowerCase().endsWith('.epub'));
     
     if (selectedFiles.length + queue.length > 10) {
-      setError("Puoi caricare un massimo di 10 file contemporaneamente.");
+      setError("You can upload a maximum of 10 files at once.");
       return;
     }
 
@@ -149,7 +149,7 @@ const BatchSlimmer = () => {
           <FileArchive size={40} className="text-blue-200" />
           <h1 className="text-3xl font-extrabold tracking-tight">ePub Slimmer Batch</h1>
         </div>
-        <p className="text-blue-100 opacity-90">Ottimizza fino a 10 libri contemporaneamente con download automatico.</p>
+        <p className="text-blue-100 opacity-90">Optimize up to 10 books simultaneously with automatic download.</p>
       </div>
 
       <div className="p-8">
@@ -163,18 +163,18 @@ const BatchSlimmer = () => {
               className="hidden" ref={fileInputRef} onChange={handleFiles} 
             />
             <Upload size={40} className="text-slate-300" />
-            <h2 className="mt-2 text-lg font-bold text-slate-700">Aggiungi file ePub</h2>
-            <p className="text-slate-400 text-sm">Trascina qui i tuoi libri (Max 10). Attualmente: {queue.length}/10</p>
+            <h2 className="mt-2 text-lg font-bold text-slate-700">Add ePub files</h2>
+            <p className="text-slate-400 text-sm">Drag your books here (Max 10). Currently: {queue.length}/10</p>
           </div>
         )}
 
         {queue.length > 0 && (
           <div className="space-y-3 mb-8">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="font-bold text-slate-700 uppercase text-xs tracking-wider">Coda di elaborazione</h3>
+              <h3 className="font-bold text-slate-700 uppercase text-xs tracking-wider">Processing Queue</h3>
               {isProcessing && (
                 <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">
-                  Libro {globalProgress.current} di {globalProgress.total}
+                  Book {globalProgress.current} of {globalProgress.total}
                 </span>
               )}
             </div>
@@ -229,7 +229,7 @@ const BatchSlimmer = () => {
           <div className="bg-slate-50 p-6 rounded-3xl border border-slate-100">
             <div className="flex items-center gap-2 mb-4 text-slate-800">
               <Settings2 size={20} />
-              <span className="font-bold">Qualità per tutti i file</span>
+              <span className="font-bold">Quality for all files</span>
             </div>
             <input 
               type="range" min={10} max={80} value={quality} 
@@ -237,15 +237,15 @@ const BatchSlimmer = () => {
               className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer mb-2"
             />
             <div className="flex justify-between text-xs font-bold text-blue-600">
-              <span>PIÙ LEGGERO</span>
+              <span>LIGHTER</span>
               <span className="text-lg bg-blue-100 px-3 py-1 rounded-full">{quality}%</span>
-              <span>QUALITÀ ALTA</span>
+              <span>HIGH QUALITY</span>
             </div>
             <button 
               onClick={processBatch}
               className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl transition-all flex items-center justify-center gap-2"
             >
-              <Zap size={24} /> AVVIA COMPRESSIONE BATCH
+              <Zap size={24} /> START BATCH COMPRESSION
             </button>
           </div>
         )}
@@ -262,13 +262,13 @@ const BatchSlimmer = () => {
             onClick={() => setQueue([])}
             className="mt-4 w-full py-4 text-slate-400 hover:text-slate-600 font-bold transition-all"
           >
-            Pulisci coda e ricomincia
+            Clear queue and restart
           </button>
         )}
       </div>
 
       <div className="bg-slate-50 p-6 border-t border-slate-100 text-center text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-        Lavorazione Sequenziale per Risparmio RAM • 100% Privacy • Fast Image Engine
+        Sequential Processing for RAM Saving • 100% Privacy • Fast Image Engine
       </div>
     </div>
   );

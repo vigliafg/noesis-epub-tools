@@ -29,7 +29,7 @@ const Slimmer = () => {
       setError(null);
       setResult(null);
     } else if (f) {
-      setError("Per favore, seleziona un file .ePub valido.");
+      setError("Please select a valid .ePub file.");
     }
   };
 
@@ -37,7 +37,7 @@ const Slimmer = () => {
     if (!file) return;
     setProcessing(true);
     setProgress(0);
-    setStatus('Apertura file...');
+    setStatus('Opening file...');
     
     try {
       const zip = await JSZip.loadAsync(file);
@@ -51,10 +51,10 @@ const Slimmer = () => {
       });
 
       if (imagePaths.length === 0) {
-        throw new Error("Nessuna immagine trovata.");
+        throw new Error("No images found.");
       }
 
-      setStatus(`Compressione di ${imagePaths.length} immagini...`);
+      setStatus(`Compressing ${imagePaths.length} images...`);
       
       const CONCURRENCY = 4;
       for (let i = 0; i < imagePaths.length; i += CONCURRENCY) {
@@ -69,7 +69,7 @@ const Slimmer = () => {
         setProgress(Math.round(((i + chunk.length) / imagePaths.length) * 100));
       }
 
-      setStatus('Generazione ePub finale...');
+      setStatus('Generating final ePub...');
       
       const outBlob = await zip.generateAsync({ 
         type: 'blob', 
@@ -115,7 +115,7 @@ const Slimmer = () => {
           <FileArchive size={40} className="text-blue-200" />
           <h1 className="text-3xl font-extrabold tracking-tight">ePub Slimmer</h1>
         </div>
-        <p className="text-blue-100 text-lg opacity-90">Versione Ultra-Veloce: Ottimizzazione parallela attiva.</p>
+        <p className="text-blue-100 text-lg opacity-90">Ultra-Fast Version: Parallel optimization active.</p>
       </div>
 
       <div className="p-8">
@@ -127,7 +127,7 @@ const Slimmer = () => {
             >
               <input type="file" accept=".epub" className="hidden" ref={fileInputRef} onChange={handleFile} />
               {file ? <FileText size={48} className="text-blue-500" /> : <Upload size={48} className="text-slate-300" />}
-              <h2 className="mt-4 text-xl font-bold text-slate-700">{file ? file.name : 'Seleziona ePub'}</h2>
+              <h2 className="mt-4 text-xl font-bold text-slate-700">{file ? file.name : 'Select ePub'}</h2>
               {file && <p className="text-slate-500 font-medium">{formatSize(file.size)}</p>}
             </div>
 
@@ -135,7 +135,7 @@ const Slimmer = () => {
               <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
                 <div className="flex items-center gap-2 mb-4 text-slate-800">
                   <Settings2 size={20} />
-                  <span className="font-bold">Bilanciamento Qualità/Peso</span>
+                  <span className="font-bold">Quality/Weight Balance</span>
                 </div>
                 <input 
                   type="range" min={10} max={80} value={quality} 
@@ -143,15 +143,15 @@ const Slimmer = () => {
                   className="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer mb-2"
                 />
                 <div className="flex justify-between text-xs font-bold text-blue-600">
-                  <span>PIÙ LEGGERO</span>
+                  <span>LIGHTER</span>
                   <span className="text-lg bg-blue-100 px-3 py-1 rounded-full">{quality}%</span>
-                  <span>PIÙ QUALITÀ</span>
+                  <span>BETTER QUALITY</span>
                 </div>
                 <button 
                   onClick={processEpub}
                   className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
                 >
-                  <Zap size={20} /> Inizia Ottimizzazione
+                  <Zap size={20} /> Start Optimization
                 </button>
               </div>
             )}
@@ -165,7 +165,7 @@ const Slimmer = () => {
             <div className="w-full bg-slate-100 rounded-full h-4 mt-6 overflow-hidden">
               <div className="bg-blue-600 h-full transition-all duration-200 ease-out" style={{ width: progress + '%' }} />
             </div>
-            <p className="mt-2 text-slate-500 font-bold text-sm">{progress}% completato</p>
+            <p className="mt-2 text-slate-500 font-bold text-sm">{progress}% completed</p>
           </div>
         )}
 
@@ -173,14 +173,14 @@ const Slimmer = () => {
           <div className="space-y-6 text-center">
             <div className="bg-emerald-50 border border-emerald-100 p-8 rounded-3xl">
               <CheckCircle2 size={48} className="mx-auto text-emerald-500 mb-4" />
-              <h3 className="text-2xl font-bold text-slate-800 mb-4">Libro Alleggerito!</h3>
+              <h3 className="text-2xl font-bold text-slate-800 mb-4">Book Slimmed!</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white p-4 rounded-xl">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Prima</div>
+                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Before</div>
                   <div className="text-lg font-bold text-slate-700">{formatSize(result.originalSize)}</div>
                 </div>
                 <div className="bg-white p-4 rounded-xl">
-                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Dopo</div>
+                  <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">After</div>
                   <div className="text-lg font-bold text-blue-600">{formatSize(result.newSize)}</div>
                 </div>
               </div>
@@ -191,13 +191,13 @@ const Slimmer = () => {
                 onClick={download}
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-5 rounded-2xl shadow-xl flex items-center justify-center gap-2 transition-all"
               >
-                <Download size={24} /> Scarica {result.name}
+                <Download size={24} /> Download {result.name}
               </button>
               <button 
                 onClick={() => { setFile(null); setResult(null); }}
                 className="text-slate-400 hover:text-slate-600 font-bold py-2 transition-all"
               >
-                Annulla e ricomincia
+                Cancel and restart
               </button>
             </div>
           </div>
@@ -212,7 +212,7 @@ const Slimmer = () => {
       </div>
 
       <div className="bg-slate-50 p-6 border-t border-slate-100 text-center text-slate-400 text-xs font-medium">
-        Lavoro 100% locale: privacy garantita e velocità massima.
+        100% local processing: guaranteed privacy and maximum speed.
       </div>
     </div>
   );
